@@ -17,8 +17,7 @@ ENV/
 # Data directories (keep directory structure via .gitkeep)
 data/raw/*
 !data/raw/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
+# data/processed is tracked so serverless deployments (Vercel) have the catalog data
 
 # SQLite and databases
 *.db

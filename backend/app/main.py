@@ -21,33 +21,37 @@ from app.services.recommender import Recommender
 
 logger = logging.getLogger("moodwave.main")
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup behavior
+def init_app_state(target_app: FastAPI):
+    if getattr(target_app.state, "_initialized", False):
+        return
+
     logger.info("Initializing CatalogStore from %s", settings.DATA_DIR)
     catalog_store = CatalogStore(data_dir=settings.DATA_DIR)
     catalog_store.load_data()
-    app.state.catalog_store = catalog_store
+    target_app.state.catalog_store = catalog_store
 
     logger.info("Initializing FeedbackStore at %s", settings.FEEDBACK_DB_PATH)
     feedback_store = FeedbackStore(db_path=settings.FEEDBACK_DB_PATH)
     feedback_store.init_db()
-    app.state.feedback_store = feedback_store
+    target_app.state.feedback_store = feedback_store
 
-    # Phase 5: Recommender components
     logger.info("Initializing CatalogIndex from %s", settings.DATA_DIR)
     catalog_index = CatalogIndex(data_dir=settings.DATA_DIR)
     catalog_index.load()
-    app.state.catalog_index = catalog_index
+    target_app.state.catalog_index = catalog_index
 
     logger.info("Initializing FeedbackModel at %s", settings.FEEDBACK_DB_PATH)
     feedback_model = FeedbackModel(db_path=settings.FEEDBACK_DB_PATH)
     feedback_model.init_db()
-    app.state.feedback_model = feedback_model
+    target_app.state.feedback_model = feedback_model
 
     recommender = Recommender(index=catalog_index, feedback_model=feedback_model)
-    app.state.recommender = recommender
+    target_app.state.recommender = recommender
+    target_app.state._initialized = True
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_app_state(app)
     yield
     logger.info("Shutting down Moodwave backend.")
 
@@ -173,7 +177,7 @@ app.include_router(catalog.router)
 # The frontend lives at PROJECT_ROOT/frontend/
 # Resolve path relative to this file: backend/app/main.py → ../../frontend
 _project_root = Path(__file__).resolve().parent.parent.parent
-_frontend_dir = _project_root / "frontend"
+_frontend_dir = Path(os.environ.get("FRONTEND_DIR", str(_project_root / "frontend")))
 
 if _frontend_dir.is_dir():
     # Serve CSS/JS/assets under /static
