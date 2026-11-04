@@ -1,0 +1,3 @@
+## This file holds the local Android SDK path for building the Android client.
+## Copy this file to local.properties and set your local SDK location, for example:
+# sdk.dir=/Users/username/Library/Android/sdk

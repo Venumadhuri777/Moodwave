@@ -1,0 +1,47 @@
+# Environment & secrets
+.env
+*.env
+**/.env
+!.env.example
+local.properties
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# PIDs and temporary files
+*.pid
+.backend.pid
+
+# Data directories (keep directory structure via .gitkeep)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# SQLite and databases
+*.db
+*.sqlite3
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Build artifacts (Gradle, Android, Python)
+build/
+*/build/
+.gradle/
+*/.gradle/
+*.apk
+*.aab
+dist/
+*.egg-info/
+
+# Operating system and IDE
+.DS_Store
+.idea/
+.vscode/
+*.iml

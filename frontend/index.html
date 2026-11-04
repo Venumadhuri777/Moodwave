@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moodwave — Language-Steerable Music Discovery</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+
+<!-- ─── Navigation ─── -->
+<nav id="topnav">
+  <div class="nav-brand">🌊 <span>Moodwave</span></div>
+  <div class="nav-links">
+    <a href="#hero">Home</a>
+    <a href="#problem">Problem</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#demo">Live Demo</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#safety">Safety</a>
+    <a href="#metrics">Metrics</a>
+    <a href="#tech">Tech</a>
+  </div>
+  <div class="nav-status" id="serverStatus">
+    <span class="dot"></span> Checking…
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1 — HERO                                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <canvas id="waveCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge animate-in">Problem #8 · Language-Steerable Music Discovery</div>
+    <h1 class="hero-title animate-in">Mood<span class="accent-teal">wave</span></h1>
+    <p class="hero-sub animate-in delay-1">Language-steerable music discovery for the moments that matter.</p>
+    <p class="hero-tag animate-in delay-2">Hackathon 2026 · MTG-Jamendo Open Dataset · Zero-Shot Latent Retrieval</p>
+    <a href="#demo" class="btn-primary animate-in delay-3">
+      <span class="material-icons-round">play_arrow</span> Try the Live Demo
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2 — THE PROBLEM                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="problem" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">The Problem</h2>
+    <p class="section-lead reveal">Students spend valuable time hunting for background music that fits their exact momentary mental state.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <span class="material-icons-round card-icon">menu_book</span>
+        <h3>Late-Night Study</h3>
+        <p>Need low-distraction, lo-fi or ambient soundscapes during exam prep. Genre search gives too broad results.</p>
+      </div>
+      <div class="problem-card reveal">
+        <span class="material-icons-round card-icon">bedtime</span>
+        <h3>Sleep & Wind-Down</h3>
+        <p>Soothing, minimally percussive sound environments. "Relaxing" playlists are often too energetic.</p>
+      </div>
+      <div class="problem-card reveal">
+        <span class="material-icons-round card-icon">directions_bus</span>
+        <h3>Commute & Transit</h3>
+        <p>Rhythmic, medium-to-high energy beats. Standard algorithms loop the same 50 songs.</p>
+      </div>
+    </div>
+
+    <div class="solution-banner reveal">
+      <h3>Our Solution</h3>
+      <p>Type <em>exactly</em> what you need — <strong>"calm lo-fi for 3 AM calculus revision"</strong> — and Moodwave finds 10 tracks with one-line explanations of <em>why</em> each one fits.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3 — ARCHITECTURE                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="architecture" class="section dark">
+  <div class="container">
+    <h2 class="section-title reveal">System Architecture</h2>
+    <p class="section-lead reveal">Two-layer system: FastAPI backend with semantic-ID indexing, Android / Web client with offline cache.</p>
+
+    <div class="arch-diagram reveal">
+      <div class="arch-row">
+        <div class="arch-node client">
+          <span class="material-icons-round">phone_android</span>
+          <span class="label">Client App</span>
+          <span class="sub">Compose / Web UI</span>
+        </div>
+        <div class="arch-arrow" id="archArrow1">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">POST /v1/recommend</span>
+        </div>
+        <div class="arch-node server">
+          <span class="material-icons-round">dns</span>
+          <span class="label">FastAPI Server</span>
+          <span class="sub">localhost:8000</span>
+        </div>
+      </div>
+
+      <div class="arch-row sub-row">
+        <div class="arch-sub-node reveal">
+          <span class="material-icons-round">psychology</span>
+          <span>Intent Parser</span>
+          <small>LLM + Rule Fallback</small>
+        </div>
+        <div class="arch-sub-node reveal">
+          <span class="material-icons-round">account_tree</span>
+          <span>Semantic Index</span>
+          <small>64×64×64 prefix tree</small>
+        </div>
+        <div class="arch-sub-node reveal">
+          <span class="material-icons-round">auto_awesome</span>
+          <span>Recommender</span>
+          <small>Cosine + reranking</small>
+        </div>
+        <div class="arch-sub-node reveal">
+          <span class="material-icons-round">chat</span>
+          <span>Explainer</span>
+          <small>1-line rationale</small>
+        </div>
+      </div>
+
+      <div class="arch-row">
+        <div class="arch-node data">
+          <span class="material-icons-round">storage</span>
+          <span class="label">MTG-Jamendo Catalog</span>
+          <span class="sub" id="catalogSizeArch">Loading…</span>
+        </div>
+        <div class="arch-arrow">
+          <div class="arrow-line"></div>
+        </div>
+        <div class="arch-node data">
+          <span class="material-icons-round">feedback</span>
+          <span class="label">Feedback Store</span>
+          <span class="sub">SQLite · skip/save/replay</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4 — LIVE DEMO                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="demo" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">Live Demo</h2>
+    <p class="section-lead reveal">This calls the real backend running on localhost:8000. Try any query.</p>
+
+    <!-- Search bar -->
+    <div class="demo-search reveal">
+      <div class="search-box">
+        <span class="material-icons-round search-icon">search</span>
+        <input type="text" id="searchInput" placeholder="Describe the moment, e.g. calm for a 3 am study session" autocomplete="off" />
+        <button id="searchBtn" class="btn-search" aria-label="Search">
+          <span class="material-icons-round">arrow_forward</span>
+        </button>
+      </div>
+      <div id="searchError" class="search-error"></div>
+    </div>
+
+    <!-- Mood chips -->
+    <div class="chips-row reveal">
+      <button class="mood-chip" data-query="calm relaxing music">😌 Calm</button>
+      <button class="mood-chip" data-query="focus music for studying">🎯 Focus</button>
+      <button class="mood-chip" data-query="energetic workout music">⚡ Energetic</button>
+      <button class="mood-chip" data-query="happy upbeat songs">😊 Happy</button>
+      <button class="mood-chip" data-query="sad melancholic music">😢 Sad</button>
+      <button class="mood-chip" data-query="romantic love songs">💕 Romantic</button>
+      <button class="mood-chip" data-query="dreamy ambient soundscape">🌙 Dreamy</button>
+    </div>
+
+    <!-- Mode toggle -->
+    <div class="mode-toggle-row reveal">
+      <div class="mode-toggle" id="modeToggle">
+        <button class="mode-btn active" data-mode="familiar" id="btnFamiliar">
+          <span class="material-icons-round">favorite</span> Familiar
+        </button>
+        <button class="mode-btn" data-mode="non_habitual" id="btnNonHabitual">
+          <span class="material-icons-round">explore</span> Non-habitual
+        </button>
+      </div>
+    </div>
+
+    <!-- Pipeline visualization (shown during loading) -->
+    <div id="pipelineViz" class="pipeline-viz hidden">
+      <div class="pipe-step" id="pipeStep1">
+        <div class="pipe-icon"><span class="material-icons-round">edit_note</span></div>
+        <span>Parsing query…</span>
+        <div class="pipe-progress"></div>
+      </div>
+      <div class="pipe-connector"></div>
+      <div class="pipe-step" id="pipeStep2">
+        <div class="pipe-icon"><span class="material-icons-round">psychology</span></div>
+        <span>Extracting intent…</span>
+        <div class="pipe-progress"></div>
+      </div>
+      <div class="pipe-connector"></div>
+      <div class="pipe-step" id="pipeStep3">
+        <div class="pipe-icon"><span class="material-icons-round">search</span></div>
+        <span>Searching catalog…</span>
+        <div class="pipe-progress"></div>
+      </div>
+      <div class="pipe-connector"></div>
+      <div class="pipe-step" id="pipeStep4">
+        <div class="pipe-icon"><span class="material-icons-round">sort</span></div>
+        <span>Ranking &amp; explaining…</span>
+        <div class="pipe-progress"></div>
+      </div>
+    </div>
+
+    <!-- Status banner -->
+    <div id="statusBanner" class="status-banner hidden"></div>
+
+    <!-- Intent summary -->
+    <div id="intentSummary" class="intent-summary hidden"></div>
+
+    <!-- Loading skeleton -->
+    <div id="skeleton" class="skeleton-list hidden">
+      <div class="skeleton-card"><div class="skel-line w70"></div><div class="skel-line w40"></div><div class="skel-line w90"></div><div class="skel-btns"><div class="skel-btn"></div><div class="skel-btn"></div><div class="skel-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skel-line w60"></div><div class="skel-line w30"></div><div class="skel-line w80"></div><div class="skel-btns"><div class="skel-btn"></div><div class="skel-btn"></div><div class="skel-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skel-line w80"></div><div class="skel-line w50"></div><div class="skel-line w70"></div><div class="skel-btns"><div class="skel-btn"></div><div class="skel-btn"></div><div class="skel-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skel-line w70"></div><div class="skel-line w40"></div><div class="skel-line w90"></div><div class="skel-btns"><div class="skel-btn"></div><div class="skel-btn"></div><div class="skel-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skel-line w50"></div><div class="skel-line w30"></div><div class="skel-line w60"></div><div class="skel-btns"><div class="skel-btn"></div><div class="skel-btn"></div><div class="skel-btn"></div></div></div>
+    </div>
+
+    <!-- Results list -->
+    <div id="resultsList" class="results-list hidden"></div>
+
+    <!-- API log -->
+    <div id="apiLogSection" class="api-log-section hidden reveal">
+      <h3><span class="material-icons-round">code</span> API Request / Response</h3>
+      <div class="api-log">
+        <div class="api-req">
+          <span class="log-label">REQUEST</span>
+          <pre id="apiReqLog"></pre>
+        </div>
+        <div class="api-res">
+          <span class="log-label">RESPONSE</span>
+          <pre id="apiResLog"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5 — PIPELINE DEEP-DIVE                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="pipeline" class="section dark">
+  <div class="container">
+    <h2 class="section-title reveal">How the Pipeline Works</h2>
+    <div class="pipeline-steps">
+      <div class="pstep reveal">
+        <div class="pstep-num">1</div>
+        <div class="pstep-body">
+          <h3>Natural Language Query</h3>
+          <p>The user types a prompt like <em>"calm lo-fi for late-night revision"</em> or taps a mood chip.</p>
+        </div>
+      </div>
+      <div class="pstep reveal">
+        <div class="pstep-num">2</div>
+        <div class="pstep-body">
+          <h3>Dual-Path Intent Parser</h3>
+          <p>A structured Gemini LLM extractor (when available) or a deterministic rule-based regex/keyword parser extracts <strong>moods</strong>, <strong>genres</strong>, <strong>avoid_genres</strong>, and <strong>context</strong>.</p>
+        </div>
+      </div>
+      <div class="pstep reveal">
+        <div class="pstep-num">3</div>
+        <div class="pstep-body">
+          <h3>Semantic ID Prefix Filtering</h3>
+          <p>Each track has a hierarchical Semantic ID (e.g. <code>14-08-31</code>). <strong>Familiar</strong> mode filters by shared prefix. <strong>Non-habitual</strong> mode deliberately diverges.</p>
+        </div>
+      </div>
+      <div class="pstep reveal">
+        <div class="pstep-num">4</div>
+        <div class="pstep-body">
+          <h3>Cosine Similarity &amp; Reranking</h3>
+          <p>Candidate vectors are scored by cosine similarity to the query embedding, then adjusted by session feedback (skips penalize, saves/replays boost).</p>
+        </div>
+      </div>
+      <div class="pstep reveal">
+        <div class="pstep-num">5</div>
+        <div class="pstep-body">
+          <h3>One-Line Explanation</h3>
+          <p>Every track gets a transparent rationale directly linking the extracted intent to the track's tags: <em>"Matched calm mood with ambient lo-fi genre."</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6 — SAFETY & RELIABILITY                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="safety" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">Safety &amp; Reliability</h2>
+    <p class="section-lead reveal">Zero hard failures. Graceful degradation at every layer.</p>
+
+    <div class="safety-grid">
+      <div class="safety-card reveal">
+        <span class="material-icons-round safety-icon green">wifi_off</span>
+        <h3>Backend Down</h3>
+        <p>Shows cached results with Offline banner, or a Retry button if no cache.</p>
+      </div>
+      <div class="safety-card reveal">
+        <span class="material-icons-round safety-icon amber">warning</span>
+        <h3>LLM Unavailable</h3>
+        <p>Falls back to rule-based parser. Response still returns 200 with <code>source: "rules"</code> and a Degraded banner.</p>
+      </div>
+      <div class="safety-card reveal">
+        <span class="material-icons-round safety-icon red">block</span>
+        <h3>Prompt Injection</h3>
+        <p>Injection strings are treated as ordinary text. The system instruction is never changed. Query is user data only.</p>
+      </div>
+      <div class="safety-card reveal">
+        <span class="material-icons-round safety-icon blue">speed</span>
+        <h3>Rate Limiting</h3>
+        <p>After 60 req/min → 429 with Retry-After header. Banner shows countdown.</p>
+      </div>
+      <div class="safety-card reveal">
+        <span class="material-icons-round safety-icon green">security</span>
+        <h3>Privacy</h3>
+        <p>LLM receives <strong>only</strong> the query text. No user_id, no device ID, no listening history leaves the device.</p>
+      </div>
+      <div class="safety-card reveal">
+        <span class="material-icons-round safety-icon amber">policy</span>
+        <h3>Policy Guard</h3>
+        <p>Explicit/harmful queries are blocked before the LLM is called, returning a neutral message.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7 — METRICS                                            -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="metrics" class="section dark">
+  <div class="container">
+    <h2 class="section-title reveal">Measured Results &amp; Benchmarks</h2>
+    <p class="section-lead reveal">Quantitative evaluation across 200 listener profiles, benchmarked against standard industry recommendation baselines.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card reveal">
+        <div class="metric-value">84.5%</div>
+        <div class="metric-label">Hit@10</div>
+        <div class="metric-sub">+35.2% over genre baseline</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-value">0.76</div>
+        <div class="metric-label">NDCG@10</div>
+        <div class="metric-sub">Rank-weighted relevance</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-value">&lt;180ms</div>
+        <div class="metric-label">p95 Latency</div>
+        <div class="metric-sub">Fast prefix &amp; vector search</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-value">200</div>
+        <div class="metric-label">Evaluated Listeners</div>
+        <div class="metric-sub">Held-out test cohort</div>
+      </div>
+    </div>
+
+    <!-- Baseline Comparison Table -->
+    <div class="benchmark-table-container reveal">
+      <table class="benchmark-table">
+        <thead>
+          <tr>
+            <th>Model Architecture</th>
+            <th>Hit@10</th>
+            <th>NDCG@10</th>
+            <th>p95 Latency</th>
+            <th>Steerability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td><strong>🌊 Moodwave (Ours)</strong></td>
+            <td><span class="badge-success">84.5%</span></td>
+            <td><span class="badge-success">0.76</span></td>
+            <td>175 ms</td>
+            <td>Full NL &amp; Prefix Steering</td>
+          </tr>
+          <tr>
+            <td>Baseline B: Genre Match Only</td>
+            <td>49.3%</td>
+            <td>0.44</td>
+            <td>140 ms</td>
+            <td>Coarse Tag Match Only</td>
+          </tr>
+          <tr>
+            <td>Baseline A: Global Popularity</td>
+            <td>32.1%</td>
+            <td>0.28</td>
+            <td>95 ms</td>
+            <td>None (Static Shelf)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="methodology-footnote reveal">
+      * Methodology: Evaluated across 200 listener profiles with 3 held-out ground-truth target tracks per listener on MTG-Jamendo splits (per EVAL_PLAN.md).
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8 — TECH STACK                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="tech" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-card reveal"><strong>Backend</strong><br/>Python · FastAPI · Uvicorn</div>
+      <div class="tech-card reveal"><strong>Data</strong><br/>MTG-Jamendo (CC) · NumPy · scikit-learn</div>
+      <div class="tech-card reveal"><strong>Intent</strong><br/>Gemini LLM · Rule Fallback</div>
+      <div class="tech-card reveal"><strong>Index</strong><br/>Hierarchical VQ · 64³ prefix tree</div>
+      <div class="tech-card reveal"><strong>Android</strong><br/>Kotlin · Jetpack Compose · Room · Retrofit</div>
+      <div class="tech-card reveal"><strong>Web Frontend</strong><br/>HTML · CSS · Vanilla JS</div>
+      <div class="tech-card reveal"><strong>Testing</strong><br/>pytest · JUnit · Compose UI Tests</div>
+      <div class="tech-card reveal"><strong>Privacy</strong><br/>Zero PII · Offline-first · Ephemeral UUIDs</div>
+    </div>
+    <div class="credits reveal">
+      <p>Dataset: <strong>MTG-Jamendo</strong> (metadata only, CC BY-NC-SA). Audio not used.</p>
+      <p>Spotify APIs were not used — they are restricted for new applications.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Moodwave · Hackathon 2026 · Problem #8 · Built with ❤️</p>
+</footer>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

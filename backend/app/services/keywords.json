@@ -1,0 +1,234 @@
+{
+  "calm": {
+    "moods": ["calm", "relaxing"],
+    "genres": ["ambient"]
+  },
+  "chill": {
+    "moods": ["chill", "relaxing"],
+    "genres": ["lofi", "chillout"]
+  },
+  "relax": {
+    "moods": ["relaxing", "calm"],
+    "genres": ["chillout"]
+  },
+  "peaceful": {
+    "moods": ["peaceful", "calm"],
+    "genres": ["ambient"]
+  },
+  "quiet": {
+    "moods": ["calm", "peaceful"],
+    "genres": ["piano"]
+  },
+  "study": {
+    "moods": ["calm", "focus", "study"],
+    "genres": ["lofi", "classical"],
+    "context": "study"
+  },
+  "focus": {
+    "moods": ["focus", "deep"],
+    "genres": ["ambient", "classical"],
+    "context": "deep focus"
+  },
+  "concentrate": {
+    "moods": ["focus", "deep"],
+    "genres": ["classical"],
+    "context": "concentration"
+  },
+  "work": {
+    "moods": ["calm", "focus"],
+    "genres": ["lofi"],
+    "context": "study"
+  },
+  "homework": {
+    "moods": ["study", "focus"],
+    "genres": ["lofi"],
+    "context": "homework"
+  },
+  "exam": {
+    "moods": ["focus", "calm"],
+    "genres": ["classical", "ambient"],
+    "context": "exam revision"
+  },
+  "revision": {
+    "moods": ["study", "focus"],
+    "genres": ["lofi"],
+    "context": "revision"
+  },
+  "sleep": {
+    "moods": ["calm", "sleep", "peaceful"],
+    "genres": ["ambient", "drone"],
+    "context": "late night"
+  },
+  "night": {
+    "moods": ["calm", "sleep"],
+    "genres": ["ambient"],
+    "context": "late night"
+  },
+  "late": {
+    "moods": ["calm", "peaceful"],
+    "genres": ["downtempo"],
+    "context": "late night"
+  },
+  "bedtime": {
+    "moods": ["sleep", "peaceful"],
+    "genres": ["ambient"],
+    "context": "bedtime"
+  },
+  "nap": {
+    "moods": ["sleep", "relaxing"],
+    "genres": ["ambient"],
+    "context": "power nap"
+  },
+  "insomnia": {
+    "moods": ["sleep", "calm"],
+    "genres": ["drone", "ambient"],
+    "context": "insomnia wind-down"
+  },
+  "happy": {
+    "moods": ["happy", "positive"],
+    "genres": ["pop"]
+  },
+  "upbeat": {
+    "moods": ["energetic", "happy"],
+    "genres": ["electronic", "synthwave"]
+  },
+  "fun": {
+    "moods": ["happy", "fun"],
+    "genres": ["pop", "indie"]
+  },
+  "party": {
+    "moods": ["party", "energetic"],
+    "genres": ["electronic", "dance"]
+  },
+  "sad": {
+    "moods": ["sad", "melancholic"],
+    "genres": ["piano"]
+  },
+  "rain": {
+    "moods": ["sad", "calm", "atmospheric"],
+    "genres": ["ambient", "lofi"],
+    "context": "rainy day"
+  },
+  "lonely": {
+    "moods": ["sad", "melancholic"],
+    "genres": ["piano", "ambient"]
+  },
+  "melancholy": {
+    "moods": ["sad", "melancholic"],
+    "genres": ["classical", "piano"]
+  },
+  "crying": {
+    "moods": ["sad", "emotional"],
+    "genres": ["piano"]
+  },
+  "gym": {
+    "moods": ["energetic", "driving"],
+    "genres": ["rock", "electronic"],
+    "context": "gym workout"
+  },
+  "workout": {
+    "moods": ["energetic", "driving"],
+    "genres": ["electronic", "rock"],
+    "context": "workout session"
+  },
+  "run": {
+    "moods": ["energetic", "driving"],
+    "genres": ["synthwave", "electronic"],
+    "context": "running"
+  },
+  "running": {
+    "moods": ["energetic", "driving"],
+    "genres": ["electronic"],
+    "context": "running"
+  },
+  "energetic": {
+    "moods": ["energetic", "driving"],
+    "genres": ["rock", "electronic"]
+  },
+  "pump": {
+    "moods": ["energetic", "driving"],
+    "genres": ["rock"],
+    "context": "pump up"
+  },
+  "cardio": {
+    "moods": ["energetic"],
+    "genres": ["electronic", "synthwave"],
+    "context": "cardio"
+  },
+  "romantic": {
+    "moods": ["romantic", "love"],
+    "genres": ["jazz", "smoothjazz"]
+  },
+  "date": {
+    "moods": ["romantic", "calm"],
+    "genres": ["jazz", "chillout"],
+    "context": "date night"
+  },
+  "love": {
+    "moods": ["romantic", "love"],
+    "genres": ["jazz", "piano"]
+  },
+  "dream": {
+    "moods": ["dream", "meditative"],
+    "genres": ["ambient"]
+  },
+  "dreamy": {
+    "moods": ["dream", "atmospheric"],
+    "genres": ["ambient"]
+  },
+  "ambient": {
+    "moods": ["atmospheric", "meditative"],
+    "genres": ["ambient", "drone"],
+    "genres_override": ["ambient"]
+  },
+  "commute": {
+    "moods": ["commute", "driving"],
+    "genres": ["electronic", "indie"],
+    "context": "commute transit"
+  },
+  "transit": {
+    "moods": ["commute"],
+    "genres": ["chillout"],
+    "context": "transit"
+  },
+  "drive": {
+    "moods": ["driving", "commute"],
+    "genres": ["synthwave", "rock"],
+    "context": "night drive"
+  },
+  "walking": {
+    "moods": ["commute", "chill"],
+    "genres": ["lofi"],
+    "context": "morning walk"
+  },
+  "meditation": {
+    "moods": ["meditative", "peaceful", "calm"],
+    "genres": ["ambient", "drone"],
+    "context": "meditation"
+  },
+  "lofi": {
+    "moods": ["relaxing", "study"],
+    "genres": ["lofi", "chillhop"]
+  },
+  "classical": {
+    "moods": ["focus", "deep"],
+    "genres": ["classical", "piano"]
+  },
+  "electronic": {
+    "moods": ["energetic"],
+    "genres": ["electronic", "synthwave"]
+  },
+  "jazz": {
+    "moods": ["relaxing", "chill"],
+    "genres": ["jazz", "smoothjazz"]
+  },
+  "rock": {
+    "moods": ["energetic", "driving"],
+    "genres": ["rock", "indie"]
+  },
+  "reading": {
+    "moods": ["calm", "focus"],
+    "genres": ["classical", "ambient"],
+    "context": "reading"
+  }
+}
