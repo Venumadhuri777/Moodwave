@@ -168,13 +168,13 @@
 
     <!-- Mood chips -->
     <div class="chips-row reveal">
+      <button class="mood-chip" data-query="calm lo-fi and piano for late-night study">📖 Late-Night Study</button>
+      <button class="mood-chip" data-query="ambient drone soundscape for sleep and wind-down">🌙 Sleep &amp; Wind-Down</button>
+      <button class="mood-chip" data-query="energetic synthwave beats for morning commute">🚌 Commute &amp; Transit</button>
+      <button class="mood-chip" data-query="focus music for studying">🎯 Deep Focus</button>
       <button class="mood-chip" data-query="calm relaxing music">😌 Calm</button>
-      <button class="mood-chip" data-query="focus music for studying">🎯 Focus</button>
-      <button class="mood-chip" data-query="energetic workout music">⚡ Energetic</button>
-      <button class="mood-chip" data-query="happy upbeat songs">😊 Happy</button>
-      <button class="mood-chip" data-query="sad melancholic music">😢 Sad</button>
-      <button class="mood-chip" data-query="romantic love songs">💕 Romantic</button>
-      <button class="mood-chip" data-query="dreamy ambient soundscape">🌙 Dreamy</button>
+      <button class="mood-chip" data-query="energetic workout rock music">⚡ Workout</button>
+      <button class="mood-chip" data-query="dreamy ambient soundscape">✨ Dreamy</button>
     </div>
 
     <!-- Mode toggle -->
@@ -437,6 +437,51 @@
     </div>
   </div>
 </section>
+
+<!-- Floating Audio Player Bar -->
+<div id="audioPlayerBar" class="audio-player-bar hidden">
+  <div class="player-container">
+    <div class="player-track-info">
+      <div class="player-art">
+        <span class="material-icons-round player-note-icon">music_note</span>
+        <div class="sound-wave-anim hidden" id="playerWaveAnim">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="player-details">
+        <div class="player-title" id="playerTitle">Select a track to play</div>
+        <div class="player-artist" id="playerArtist">Moodwave Discovery Player</div>
+      </div>
+      <span class="player-genre-badge" id="playerGenre">Ambient</span>
+    </div>
+    
+    <div class="player-controls">
+      <div class="player-buttons">
+        <button id="playerPrevBtn" class="player-ctrl-btn icon-only" title="Previous Track"><span class="material-icons-round">skip_previous</span></button>
+        <button id="playerPlayBtn" class="player-ctrl-btn play-toggle" title="Play/Pause"><span class="material-icons-round" id="playerPlayIcon">play_arrow</span></button>
+        <button id="playerNextBtn" class="player-ctrl-btn icon-only" title="Next Track"><span class="material-icons-round">skip_next</span></button>
+      </div>
+      <div class="player-timeline">
+        <span id="playerCurrentTime">0:00</span>
+        <div class="progress-bar-container" id="progressBarContainer">
+          <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+        </div>
+        <span id="playerTotalTime">2:30</span>
+      </div>
+    </div>
+
+    <div class="player-actions">
+      <div class="volume-container">
+        <span class="material-icons-round vol-icon" id="volIcon">volume_up</span>
+        <input type="range" id="playerVolume" min="0" max="1" step="0.05" value="0.75" class="vol-slider" />
+      </div>
+      <a id="playerExternalLink" href="#" target="_blank" rel="noopener" class="player-ctrl-btn icon-only" title="Open on Jamendo">
+        <span class="material-icons-round">open_in_new</span>
+      </a>
+      <button id="playerCloseBtn" class="player-ctrl-btn icon-only" title="Close Player"><span class="material-icons-round">close</span></button>
+    </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer>
